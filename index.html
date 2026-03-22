@@ -10,24 +10,68 @@
 
 <style>
 :root{
-  --bg-void:        #080610;
-  --bg-surface:     #0e0c1a;
-  --bg-elevated:    #14112a;
-  --gold:           #F5C97A;
-  --gold-mid:       #C8884A;
-  --gold-glow:      rgba(245,201,122,0.12);
-  --text-primary:   #e8e0d8;
-  --text-muted:     rgba(232,224,216,0.45);
-  --text-faint:     rgba(232,224,216,0.25);
-  --border-subtle:  rgba(255,255,255,0.06);
-  --border-mid:     rgba(255,255,255,0.10);
-  --border-gold:    rgba(245,201,122,0.25);
-  --font-arabic:    'Lateef', serif;
-  --font-display:   'Crimson Pro', serif;
-  --font-body:      'Inter', system-ui, sans-serif;
-  --font-mono:      'DM Mono', monospace;
-  --shadow-gold:    0 0 40px rgba(245,201,122,0.08);
-  --shadow-card:    0 4px 24px rgba(0,0,0,0.4);
+  --bg-void:           #080610;
+  --bg-surface:        #0e0c1a;
+  --bg-elevated:       #14112a;
+  --gold:              #F5C97A;
+  --gold-mid:          #C8884A;
+  --gold-glow:         rgba(245,201,122,0.12);
+  --text-primary:      #e8e0d8;
+  --text-muted:        rgba(232,224,216,0.45);
+  --text-faint:        rgba(232,224,216,0.25);
+  --border-subtle:     rgba(255,255,255,0.06);
+  --border-mid:        rgba(255,255,255,0.10);
+  --border-gold:       rgba(245,201,122,0.25);
+  --font-arabic:       'Lateef', serif;
+  --font-display:      'Crimson Pro', serif;
+  --font-body:         'Inter', system-ui, sans-serif;
+  --font-mono:         'DM Mono', monospace;
+  --shadow-gold:       0 0 40px rgba(245,201,122,0.08);
+  --shadow-card:       0 4px 24px rgba(0,0,0,0.4);
+  --bg-texture-line:   rgba(255,255,255,0.012);
+  --progress-track:    rgba(255,255,255,0.06);
+}
+
+/* Light mode tokens — applied when system preference is light and no explicit override is set */
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme="dark"]) {
+    --bg-void:           #F5F0E8;
+    --bg-surface:        #EDE7DB;
+    --bg-elevated:       #E4DDD0;
+    --gold:              #A0601A;
+    --gold-mid:          #7A4510;
+    --gold-glow:         rgba(160,96,26,0.08);
+    --text-primary:      #1C1610;
+    --text-muted:        rgba(28,22,16,0.55);
+    --text-faint:        rgba(28,22,16,0.32);
+    --border-subtle:     rgba(28,22,16,0.09);
+    --border-mid:        rgba(28,22,16,0.15);
+    --border-gold:       rgba(160,96,26,0.28);
+    --shadow-gold:       0 0 40px rgba(160,96,26,0.10);
+    --shadow-card:       0 2px 16px rgba(28,22,16,0.10);
+    --bg-texture-line:   rgba(28,22,16,0.025);
+    --progress-track:    rgba(28,22,16,0.08);
+  }
+}
+
+/* Explicit light override (user selected) */
+[data-theme="light"] {
+  --bg-void:           #F5F0E8;
+  --bg-surface:        #EDE7DB;
+  --bg-elevated:       #E4DDD0;
+  --gold:              #A0601A;
+  --gold-mid:          #7A4510;
+  --gold-glow:         rgba(160,96,26,0.08);
+  --text-primary:      #1C1610;
+  --text-muted:        rgba(28,22,16,0.55);
+  --text-faint:        rgba(28,22,16,0.32);
+  --border-subtle:     rgba(28,22,16,0.09);
+  --border-mid:        rgba(28,22,16,0.15);
+  --border-gold:       rgba(160,96,26,0.28);
+  --shadow-gold:       0 0 40px rgba(160,96,26,0.10);
+  --shadow-card:       0 2px 16px rgba(28,22,16,0.10);
+  --bg-texture-line:   rgba(28,22,16,0.025);
+  --progress-track:    rgba(28,22,16,0.08);
 }
 
 *{box-sizing:border-box;margin:0;padding:0}
@@ -40,9 +84,9 @@ body{
   -moz-osx-font-smoothing:grayscale;
   background:var(--bg-void);
   background-image:
-    repeating-linear-gradient(60deg,  transparent, transparent 40px, rgba(255,255,255,0.012) 40px, rgba(255,255,255,0.012) 41px),
-    repeating-linear-gradient(-60deg, transparent, transparent 40px, rgba(255,255,255,0.012) 40px, rgba(255,255,255,0.012) 41px),
-    repeating-linear-gradient(0deg,   transparent, transparent 40px, rgba(255,255,255,0.008) 40px, rgba(255,255,255,0.008) 41px);
+    repeating-linear-gradient(60deg,  transparent, transparent 40px, var(--bg-texture-line) 40px, var(--bg-texture-line) 41px),
+    repeating-linear-gradient(-60deg, transparent, transparent 40px, var(--bg-texture-line) 40px, var(--bg-texture-line) 41px),
+    repeating-linear-gradient(0deg,   transparent, transparent 40px, var(--bg-texture-line) 40px, var(--bg-texture-line) 41px);
   color:var(--text-primary);
   min-height:100vh;
   display:flex;
@@ -188,7 +232,7 @@ h1{
 
 .progress-bar{
   height:4px;
-  background:rgba(255,255,255,0.06);
+  background:var(--progress-track);
   border-radius:4px;
   overflow:hidden;
   margin-bottom:18px;
@@ -395,20 +439,40 @@ details summary:hover{
   padding-top:14px;
   border-top:1px solid var(--border-subtle);
   text-align:center;
+}
+
+.footer-label{
   font-family:var(--font-mono);
-  font-size:.7rem;
-  letter-spacing:.5px;
+  font-size:.6rem;
+  letter-spacing:2.5px;
+  text-transform:uppercase;
   color:var(--text-faint);
+  margin-bottom:4px;
 }
 
 .footer a{
+  display:inline-flex;
+  align-items:center;
+  gap:4px;
   color:var(--gold);
+  font-family:var(--font-display);
+  font-size:.9375rem;
+  font-style:italic;
   text-decoration:none;
+  border-bottom:1px solid var(--border-gold);
+  padding-bottom:1px;
   transition:.2s ease;
 }
 
 .footer a:hover{
-  opacity:.8;
+  opacity:.75;
+}
+
+.footer a svg{
+  width:11px;
+  height:11px;
+  flex-shrink:0;
+  opacity:.7;
 }
 </style>
 </head>
@@ -426,6 +490,7 @@ details summary:hover{
     <span></span>
   </button>
   <div class="dropdown" id="dropdown">
+    <button id="settingsBtn">Settings</button>
     <button id="aboutBtn">About</button>
     <button id="saveHomeBtn">Save To Home Screen</button>
   </div>
@@ -445,7 +510,22 @@ details summary:hover{
   </div>
 
   <div class="footer">
-    Created by <a href="https://amanahdigital.co.uk" target="_blank" rel="noopener">AmanahDigital1447</a>
+    <div class="footer-label">Powered by</div>
+    <a href="https://amanahdigital.co.uk" target="_blank" rel="noopener">AmanahDigital<svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 8.5l5-5M5 3.5h3.5V7"/></svg></a>
+  </div>
+</div>
+
+<!-- Settings Modal -->
+<div class="modal-overlay" id="settingsModal">
+  <div class="modal">
+    <button class="modal-close" id="closeSettings">&#x2715;</button>
+    <h2>Settings</h2>
+    <p style="font-family:var(--font-mono);font-size:.7rem;letter-spacing:1.5px;text-transform:uppercase;color:var(--text-faint);margin-bottom:10px;">Appearance</p>
+    <div class="script-toggle" id="themeToggle" style="margin-bottom:0;">
+      <button class="script-btn" data-theme-opt="null">Device</button>
+      <button class="script-btn" data-theme-opt="light">Light</button>
+      <button class="script-btn" data-theme-opt="dark">Dark</button>
+    </div>
   </div>
 </div>
 
@@ -475,6 +555,41 @@ details summary:hover{
 </div>
 
 <script>
+// Theme management (null = device, "light", "dark")
+let theme=localStorage.getItem("theme")||null;
+
+function applyTheme(t){
+  if(t==="light")document.documentElement.setAttribute("data-theme","light");
+  else if(t==="dark")document.documentElement.setAttribute("data-theme","dark");
+  else document.documentElement.removeAttribute("data-theme");
+  // Sync toggle button states in settings modal
+  document.querySelectorAll("[data-theme-opt]").forEach(b=>{
+    b.classList.toggle("active",b.dataset.themeOpt===(t===null?"null":t));
+  });
+}
+
+applyTheme(theme);
+
+// Settings modal
+document.getElementById("settingsBtn").onclick=()=>{
+  dropdown.classList.remove("open");
+  openModal("settingsModal");
+};
+document.getElementById("closeSettings").onclick=()=>closeModal("settingsModal");
+document.getElementById("settingsModal").onclick=(e)=>{
+  if(e.target===e.currentTarget)closeModal("settingsModal");
+};
+
+// Theme option buttons (event delegation)
+document.getElementById("themeToggle").addEventListener("click",(e)=>{
+  const btn=e.target.closest("[data-theme-opt]");
+  if(!btn)return;
+  theme=btn.dataset.themeOpt==="null"?null:btn.dataset.themeOpt;
+  if(theme===null)localStorage.removeItem("theme");
+  else localStorage.setItem("theme",theme);
+  applyTheme(theme);
+});
+
 let simpleCount=JSON.parse(localStorage.getItem("simpleCount"))||0;
 let scriptStyle=localStorage.getItem("scriptStyle")||"indopak";
 
